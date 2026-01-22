@@ -1,0 +1,209 @@
+{
+  "organization": "TechCorp Inc.",
+  "document_type": "Vendor Security Assessment",
+  "assessment_date": "2024-06-01",
+  "next_review_date": "2025-06-01",
+  
+  "vendor_management_program": {
+    "program_owner": "Risk Management Team",
+    "policy_document": "VND-POL-001",
+    "last_policy_review": "2024-01-15",
+    "assessment_methodology": "SOC 2 Trust Services Criteria Based"
+  },
+  
+  "vendor_inventory": [
+    {
+      "vendor_id": "VND001",
+      "vendor_name": "CloudHost Pro",
+      "service_type": "Infrastructure Hosting",
+      "data_classification": "confidential",
+      "risk_tier": "critical",
+      "contract_start": "2022-01-01",
+      "contract_end": "2025-12-31",
+      "security_assessment": {
+        "soc2_report": true,
+        "soc2_type": "Type II",
+        "report_date": "2024-03-15",
+        "report_period": "2023-04-01 to 2024-03-31",
+        "exceptions_noted": 0,
+        "assessment_score": 95
+      },
+      "data_processing_agreement": true,
+      "insurance_coverage": {
+        "cyber_liability": 10000000,
+        "errors_omissions": 5000000
+      },
+      "last_security_review": "2024-03-20",
+      "next_security_review": "2024-09-20"
+    },
+    {
+      "vendor_id": "VND002",
+      "vendor_name": "SecurePay Gateway",
+      "service_type": "Payment Processing",
+      "data_classification": "restricted",
+      "risk_tier": "critical",
+      "contract_start": "2021-06-01",
+      "contract_end": "2024-12-31",
+      "security_assessment": {
+        "pci_dss_compliant": true,
+        "pci_level": 1,
+        "soc2_report": true,
+        "soc2_type": "Type II",
+        "report_date": "2024-02-28",
+        "report_period": "2023-03-01 to 2024-02-28",
+        "exceptions_noted": 1,
+        "exception_details": "Minor documentation gap - remediated",
+        "assessment_score": 92
+      },
+      "data_processing_agreement": true,
+      "insurance_coverage": {
+        "cyber_liability": 25000000,
+        "errors_omissions": 10000000
+      },
+      "last_security_review": "2024-03-01",
+      "next_security_review": "2024-09-01"
+    },
+    {
+      "vendor_id": "VND003",
+      "vendor_name": "DataAnalytics Plus",
+      "service_type": "Business Intelligence",
+      "data_classification": "internal",
+      "risk_tier": "high",
+      "contract_start": "2023-01-01",
+      "contract_end": "2025-12-31",
+      "security_assessment": {
+        "soc2_report": true,
+        "soc2_type": "Type I",
+        "report_date": "2024-01-15",
+        "assessment_score": 85,
+        "notes": "Type II in progress, expected Q3 2024"
+      },
+      "data_processing_agreement": true,
+      "insurance_coverage": {
+        "cyber_liability": 5000000,
+        "errors_omissions": 2000000
+      },
+      "last_security_review": "2024-01-20",
+      "next_security_review": "2024-07-20"
+    },
+    {
+      "vendor_id": "VND004",
+      "vendor_name": "EmailSecure Corp",
+      "service_type": "Email Security",
+      "data_classification": "confidential",
+      "risk_tier": "high",
+      "contract_start": "2022-07-01",
+      "contract_end": "2025-06-30",
+      "security_assessment": {
+        "soc2_report": true,
+        "soc2_type": "Type II",
+        "report_date": "2024-04-01",
+        "report_period": "2023-04-01 to 2024-03-31",
+        "exceptions_noted": 0,
+        "assessment_score": 98
+      },
+      "data_processing_agreement": true,
+      "insurance_coverage": {
+        "cyber_liability": 15000000,
+        "errors_omissions": 5000000
+      },
+      "last_security_review": "2024-04-05",
+      "next_security_review": "2024-10-05"
+    },
+    {
+      "vendor_id": "VND005",
+      "vendor_name": "HRSoft Solutions",
+      "service_type": "HR Management System",
+      "data_classification": "restricted",
+      "risk_tier": "high",
+      "contract_start": "2020-01-01",
+      "contract_end": "2025-12-31",
+      "security_assessment": {
+        "soc2_report": true,
+        "soc2_type": "Type II",
+        "report_date": "2024-05-01",
+        "report_period": "2023-05-01 to 2024-04-30",
+        "exceptions_noted": 0,
+        "assessment_score": 94
+      },
+      "data_processing_agreement": true,
+      "insurance_coverage": {
+        "cyber_liability": 10000000,
+        "errors_omissions": 5000000
+      },
+      "last_security_review": "2024-05-10",
+      "next_security_review": "2024-11-10"
+    }
+  ],
+  
+  "risk_assessment_criteria": {
+    "tier_definitions": {
+      "critical": {
+        "description": "Vendors with access to restricted/confidential data or critical systems",
+        "review_frequency": "semi-annual",
+        "soc2_required": true,
+        "onsite_assessment": "optional"
+      },
+      "high": {
+        "description": "Vendors with access to internal data or important systems",
+        "review_frequency": "annual",
+        "soc2_required": true,
+        "onsite_assessment": "not_required"
+      },
+      "medium": {
+        "description": "Vendors with limited data access",
+        "review_frequency": "annual",
+        "soc2_required": "preferred",
+        "onsite_assessment": "not_required"
+      },
+      "low": {
+        "description": "Vendors with no data access",
+        "review_frequency": "biennial",
+        "soc2_required": false,
+        "onsite_assessment": "not_required"
+      }
+    },
+    "minimum_assessment_score": 80,
+    "automatic_escalation_threshold": 70
+  },
+  
+  "due_diligence_checklist": {
+    "pre_engagement": [
+      "Security questionnaire completion",
+      "SOC 2 report review (or equivalent)",
+      "Financial stability assessment",
+      "Reference checks",
+      "Legal/regulatory compliance verification"
+    ],
+    "ongoing_monitoring": [
+      "Annual security questionnaire",
+      "SOC 2 report review upon availability",
+      "Security incident notification review",
+      "Contract compliance verification",
+      "Insurance certificate renewal"
+    ]
+  },
+  
+  "incident_notification_requirements": {
+    "notification_sla_hours": 24,
+    "required_information": [
+      "Nature of incident",
+      "Data potentially affected",
+      "Timeline of events",
+      "Containment actions taken",
+      "Remediation plan"
+    ],
+    "escalation_contact": "security@techcorp.com"
+  },
+  
+  "program_metrics": {
+    "total_vendors": 42,
+    "critical_tier_vendors": 5,
+    "high_tier_vendors": 12,
+    "medium_tier_vendors": 18,
+    "low_tier_vendors": 7,
+    "vendors_with_soc2": 38,
+    "average_assessment_score": 91,
+    "vendors_requiring_remediation": 2
+  }
+}

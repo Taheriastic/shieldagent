@@ -1,0 +1,21 @@
+change_id,title,type,status,requested_by,approved_by,risk_level,environment,created_date,approved_date,implemented_date,rollback_required,testing_completed,documentation_updated
+CHG001,Upgrade PostgreSQL to version 15,standard,completed,john.smith,sarah.jones,medium,production,2024-06-01,2024-06-02,2024-06-05,no,yes,yes
+CHG002,Deploy new authentication service,significant,completed,alice.chen,sarah.jones,high,production,2024-05-15,2024-05-17,2024-05-20,no,yes,yes
+CHG003,Security patch for Log4j vulnerability,emergency,completed,james.garcia,sarah.jones,critical,production,2024-05-10,2024-05-10,2024-05-10,no,yes,yes
+CHG004,Add new API endpoint for reporting,standard,completed,mike.wilson,alice.chen,low,production,2024-06-08,2024-06-09,2024-06-12,no,yes,yes
+CHG005,Update firewall rules for new vendor,standard,completed,quinn.thomas,sarah.jones,medium,production,2024-06-03,2024-06-04,2024-06-06,no,yes,yes
+CHG006,Database schema migration v2.5,significant,completed,frank.miller,alice.chen,high,production,2024-05-25,2024-05-27,2024-05-30,no,yes,yes
+CHG007,SSL certificate renewal,standard,completed,james.garcia,quinn.thomas,medium,production,2024-05-20,2024-05-21,2024-05-22,no,yes,yes
+CHG008,New monitoring dashboard deployment,standard,completed,henry.wang,alice.chen,low,production,2024-06-10,2024-06-11,2024-06-13,no,yes,yes
+CHG009,Upgrade Kubernetes cluster to 1.28,significant,in_progress,john.smith,sarah.jones,high,production,2024-06-12,2024-06-14,,no,yes,no
+CHG010,Add rate limiting to public APIs,standard,approved,kate.martinez,alice.chen,medium,production,2024-06-13,2024-06-14,,no,no,no
+CHG011,Deploy new logging infrastructure,significant,pending_approval,nick.johnson,pending,high,production,2024-06-14,,,no,no,no
+CHG012,Security hardening for web servers,standard,completed,quinn.thomas,sarah.jones,medium,production,2024-05-05,2024-05-06,2024-05-08,no,yes,yes
+CHG013,Implement new backup retention policy,standard,completed,james.garcia,sarah.jones,medium,production,2024-04-20,2024-04-21,2024-04-25,no,yes,yes
+CHG014,Deploy MFA enforcement update,significant,completed,sarah.jones,ceo_office,high,production,2024-04-01,2024-04-03,2024-04-10,no,yes,yes
+CHG015,Network segmentation phase 2,significant,completed,quinn.thomas,sarah.jones,high,production,2024-03-15,2024-03-18,2024-03-25,no,yes,yes
+CHG016,Emergency rollback of CHG009 changes,emergency,cancelled,john.smith,sarah.jones,high,production,2024-06-15,2024-06-15,,no,no,no
+CHG017,Add new encryption at rest for backups,significant,completed,james.garcia,sarah.jones,high,production,2024-02-01,2024-02-05,2024-02-15,no,yes,yes
+CHG018,Update password complexity requirements,standard,completed,sarah.jones,quinn.thomas,medium,production,2024-01-15,2024-01-16,2024-01-20,no,yes,yes
+CHG019,Deploy vulnerability scanning agent,standard,completed,quinn.thomas,sarah.jones,low,production,2024-01-10,2024-01-11,2024-01-15,no,yes,yes
+CHG020,Annual DR site failover test,significant,completed,john.smith,sarah.jones,high,production,2024-01-20,2024-01-20,2024-01-20,yes,yes,yes

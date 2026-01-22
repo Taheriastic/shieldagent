@@ -1,0 +1,228 @@
+{
+  "organization": "TechCorp Inc.",
+  "document_type": "Business Continuity and Disaster Recovery Plan",
+  "version": "4.0",
+  "effective_date": "2024-01-01",
+  "last_review_date": "2024-05-20",
+  "next_review_date": "2025-01-01",
+  "classification": "Confidential",
+  
+  "executive_summary": {
+    "purpose": "This document outlines procedures to maintain business operations during and recover from disruptive events",
+    "scope": "All critical business functions, IT systems, and personnel",
+    "key_contacts": {
+      "bc_coordinator": "Sarah Jones",
+      "it_dr_lead": "John Smith",
+      "executive_sponsor": "CEO"
+    }
+  },
+  
+  "recovery_objectives": {
+    "tier_1_critical": {
+      "description": "Mission-critical systems that must be operational for business survival",
+      "systems": [
+        "Customer-facing web application",
+        "Payment processing system",
+        "Core database cluster",
+        "Authentication systems"
+      ],
+      "rto_hours": 4,
+      "rpo_hours": 1,
+      "mtpd_hours": 24
+    },
+    "tier_2_important": {
+      "description": "Important systems required for normal operations",
+      "systems": [
+        "Email and collaboration",
+        "CRM system",
+        "Internal applications",
+        "Reporting systems"
+      ],
+      "rto_hours": 24,
+      "rpo_hours": 4,
+      "mtpd_hours": 72
+    },
+    "tier_3_standard": {
+      "description": "Standard business systems",
+      "systems": [
+        "Development environments",
+        "Test systems",
+        "Archive storage",
+        "Non-critical internal tools"
+      ],
+      "rto_hours": 72,
+      "rpo_hours": 24,
+      "mtpd_hours": 168
+    }
+  },
+  
+  "backup_strategy": {
+    "primary_backup_solution": "AWS Backup",
+    "secondary_backup_solution": "Veeam",
+    "backup_schedules": {
+      "tier_1_systems": {
+        "full_backup": "daily",
+        "incremental_backup": "every_4_hours",
+        "transaction_logs": "every_15_minutes",
+        "retention_days": 90
+      },
+      "tier_2_systems": {
+        "full_backup": "daily",
+        "incremental_backup": "every_6_hours",
+        "retention_days": 60
+      },
+      "tier_3_systems": {
+        "full_backup": "weekly",
+        "incremental_backup": "daily",
+        "retention_days": 30
+      }
+    },
+    "offsite_replication": {
+      "enabled": true,
+      "primary_region": "us-east-1",
+      "secondary_region": "us-west-2",
+      "replication_lag_target_minutes": 15
+    },
+    "backup_encryption": {
+      "enabled": true,
+      "algorithm": "AES-256",
+      "key_management": "AWS KMS"
+    }
+  },
+  
+  "disaster_recovery_sites": {
+    "primary_site": {
+      "location": "AWS us-east-1 (N. Virginia)",
+      "type": "Primary Production",
+      "capacity": "100%"
+    },
+    "dr_site": {
+      "location": "AWS us-west-2 (Oregon)",
+      "type": "Hot Standby",
+      "capacity": "100%",
+      "failover_type": "automated_with_manual_approval",
+      "estimated_failover_time_minutes": 30
+    },
+    "tertiary_site": {
+      "location": "On-premises Data Center",
+      "type": "Warm Standby",
+      "capacity": "60%",
+      "use_case": "Extended outage or cloud provider failure"
+    }
+  },
+  
+  "recovery_procedures": {
+    "declaration_authority": [
+      "CEO",
+      "CTO",
+      "VP of Operations",
+      "Director of IT"
+    ],
+    "activation_criteria": [
+      "Primary site unavailable for more than 2 hours",
+      "Confirmed security breach requiring isolation",
+      "Natural disaster affecting primary region",
+      "Extended power or network outage"
+    ],
+    "communication_tree": {
+      "internal_notification": "PagerDuty + Email",
+      "customer_notification": "Status page + Email",
+      "stakeholder_notification": "Direct call + Email"
+    },
+    "recovery_steps": [
+      {
+        "step": 1,
+        "action": "Assess situation and declare disaster if criteria met",
+        "responsible": "Incident Commander",
+        "duration_minutes": 15
+      },
+      {
+        "step": 2,
+        "action": "Activate DR team and initiate communication",
+        "responsible": "BC Coordinator",
+        "duration_minutes": 15
+      },
+      {
+        "step": 3,
+        "action": "Initiate failover to DR site",
+        "responsible": "IT DR Lead",
+        "duration_minutes": 30
+      },
+      {
+        "step": 4,
+        "action": "Verify system functionality and data integrity",
+        "responsible": "Application Teams",
+        "duration_minutes": 60
+      },
+      {
+        "step": 5,
+        "action": "Update DNS and restore customer access",
+        "responsible": "Network Team",
+        "duration_minutes": 15
+      },
+      {
+        "step": 6,
+        "action": "Continuous monitoring and status updates",
+        "responsible": "All Teams",
+        "duration_minutes": "ongoing"
+      }
+    ]
+  },
+  
+  "testing_program": {
+    "test_types": {
+      "tabletop_exercise": {
+        "frequency": "quarterly",
+        "last_test": "2024-04-15",
+        "next_test": "2024-07-15",
+        "participants": "Leadership and key personnel"
+      },
+      "functional_test": {
+        "frequency": "semi_annual",
+        "last_test": "2024-03-01",
+        "next_test": "2024-09-01",
+        "scope": "Individual system recovery"
+      },
+      "full_dr_test": {
+        "frequency": "annual",
+        "last_test": "2024-01-20",
+        "next_test": "2025-01-20",
+        "scope": "Complete failover to DR site",
+        "last_test_results": {
+          "success": true,
+          "actual_rto_achieved_hours": 3.5,
+          "actual_rpo_achieved_hours": 0.5,
+          "issues_identified": 2,
+          "issues_remediated": 2
+        }
+      },
+      "backup_restoration_test": {
+        "frequency": "monthly",
+        "last_test": "2024-06-01",
+        "next_test": "2024-07-01",
+        "success_rate_percent": 100
+      }
+    }
+  },
+  
+  "maintenance": {
+    "plan_review_frequency": "annual",
+    "contact_list_update": "quarterly",
+    "system_inventory_update": "quarterly",
+    "training_frequency": "annual",
+    "last_plan_update": "2024-05-20",
+    "change_triggers": [
+      "Significant infrastructure changes",
+      "New critical systems deployed",
+      "Organizational restructuring",
+      "Post-incident lessons learned",
+      "Regulatory requirement changes"
+    ]
+  },
+  
+  "compliance_mapping": {
+    "soc2_controls": ["A1.1", "A1.2", "A1.3"],
+    "iso27001_controls": ["A.17.1.1", "A.17.1.2", "A.17.2.1"],
+    "nist_csf": ["PR.IP-9", "PR.IP-10", "RC.RP-1"]
+  }
+}

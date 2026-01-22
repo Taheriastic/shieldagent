@@ -1,0 +1,284 @@
+{
+  "organization": "TechCorp Inc.",
+  "document_type": "Risk Assessment Register",
+  "assessment_period": "2024",
+  "last_updated": "2024-06-15",
+  "assessment_methodology": "NIST RMF / ISO 27005",
+  "risk_appetite": "moderate",
+  
+  "risk_scoring_criteria": {
+    "likelihood_scale": {
+      "1": "Rare - May occur only in exceptional circumstances",
+      "2": "Unlikely - Could occur at some time",
+      "3": "Possible - Might occur at some time",
+      "4": "Likely - Will probably occur in most circumstances",
+      "5": "Almost Certain - Expected to occur in most circumstances"
+    },
+    "impact_scale": {
+      "1": "Negligible - Minor impact, easily absorbed",
+      "2": "Minor - Some impact requiring attention",
+      "3": "Moderate - Significant impact requiring management attention",
+      "4": "Major - Major impact on operations or finances",
+      "5": "Catastrophic - Severe impact threatening business survival"
+    },
+    "risk_rating": {
+      "1-4": "Low",
+      "5-9": "Medium",
+      "10-14": "High",
+      "15-25": "Critical"
+    }
+  },
+  
+  "identified_risks": [
+    {
+      "risk_id": "RISK-001",
+      "category": "Cybersecurity",
+      "title": "Ransomware Attack",
+      "description": "Malicious actors deploy ransomware affecting critical systems",
+      "threat_source": "External attackers",
+      "vulnerability": "Endpoint security gaps, phishing susceptibility",
+      "likelihood": 3,
+      "impact": 5,
+      "inherent_risk_score": 15,
+      "inherent_risk_rating": "Critical",
+      "existing_controls": [
+        "Endpoint Detection and Response (EDR)",
+        "Email filtering and anti-phishing",
+        "Regular security awareness training",
+        "Network segmentation",
+        "Immutable backups"
+      ],
+      "residual_likelihood": 2,
+      "residual_impact": 4,
+      "residual_risk_score": 8,
+      "residual_risk_rating": "Medium",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Enhance backup testing frequency, implement additional network segmentation",
+      "risk_owner": "CISO",
+      "review_date": "2024-09-15"
+    },
+    {
+      "risk_id": "RISK-002",
+      "category": "Cybersecurity",
+      "title": "Data Breach via Insider Threat",
+      "description": "Authorized user intentionally or accidentally exposes sensitive data",
+      "threat_source": "Internal users",
+      "vulnerability": "Excessive access privileges, lack of DLP",
+      "likelihood": 3,
+      "impact": 4,
+      "inherent_risk_score": 12,
+      "inherent_risk_rating": "High",
+      "existing_controls": [
+        "Role-based access control",
+        "Data Loss Prevention (DLP)",
+        "User activity monitoring",
+        "Background checks",
+        "Security awareness training"
+      ],
+      "residual_likelihood": 2,
+      "residual_impact": 3,
+      "residual_risk_score": 6,
+      "residual_risk_rating": "Medium",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Implement enhanced user behavior analytics",
+      "risk_owner": "Security Manager",
+      "review_date": "2024-09-15"
+    },
+    {
+      "risk_id": "RISK-003",
+      "category": "Operational",
+      "title": "Cloud Service Provider Outage",
+      "description": "Extended outage of primary cloud provider (AWS)",
+      "threat_source": "Third-party dependency",
+      "vulnerability": "Single cloud provider dependency",
+      "likelihood": 2,
+      "impact": 4,
+      "inherent_risk_score": 8,
+      "inherent_risk_rating": "Medium",
+      "existing_controls": [
+        "Multi-region deployment",
+        "Automated failover",
+        "Regular DR testing",
+        "SLA monitoring"
+      ],
+      "residual_likelihood": 1,
+      "residual_impact": 3,
+      "residual_risk_score": 3,
+      "residual_risk_rating": "Low",
+      "risk_treatment": "Accept",
+      "treatment_plan": "Current controls deemed sufficient; monitor SLA performance",
+      "risk_owner": "Director of Infrastructure",
+      "review_date": "2024-12-15"
+    },
+    {
+      "risk_id": "RISK-004",
+      "category": "Compliance",
+      "title": "Regulatory Non-Compliance (GDPR/CCPA)",
+      "description": "Failure to meet data privacy regulatory requirements",
+      "threat_source": "Regulatory bodies",
+      "vulnerability": "Complex data processing, evolving regulations",
+      "likelihood": 2,
+      "impact": 4,
+      "inherent_risk_score": 8,
+      "inherent_risk_rating": "Medium",
+      "existing_controls": [
+        "Privacy impact assessments",
+        "Data subject rights procedures",
+        "Consent management platform",
+        "Regular compliance audits",
+        "Privacy training"
+      ],
+      "residual_likelihood": 1,
+      "residual_impact": 3,
+      "residual_risk_score": 3,
+      "residual_risk_rating": "Low",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Quarterly compliance reviews, engage external privacy counsel",
+      "risk_owner": "Chief Privacy Officer",
+      "review_date": "2024-09-15"
+    },
+    {
+      "risk_id": "RISK-005",
+      "category": "Cybersecurity",
+      "title": "Third-Party/Supply Chain Compromise",
+      "description": "Security breach through compromised vendor or software supply chain",
+      "threat_source": "Third-party vendors",
+      "vulnerability": "Vendor access, software dependencies",
+      "likelihood": 3,
+      "impact": 4,
+      "inherent_risk_score": 12,
+      "inherent_risk_rating": "High",
+      "existing_controls": [
+        "Vendor security assessments",
+        "SOC 2 report requirements",
+        "Software composition analysis",
+        "Limited vendor access",
+        "Vendor monitoring"
+      ],
+      "residual_likelihood": 2,
+      "residual_impact": 3,
+      "residual_risk_score": 6,
+      "residual_risk_rating": "Medium",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Implement software bill of materials (SBOM) requirements",
+      "risk_owner": "Security Manager",
+      "review_date": "2024-09-15"
+    },
+    {
+      "risk_id": "RISK-006",
+      "category": "Cybersecurity",
+      "title": "Account Compromise via Phishing",
+      "description": "User credentials compromised through phishing attacks",
+      "threat_source": "External attackers",
+      "vulnerability": "Human error, credential theft",
+      "likelihood": 4,
+      "impact": 3,
+      "inherent_risk_score": 12,
+      "inherent_risk_rating": "High",
+      "existing_controls": [
+        "Multi-factor authentication (MFA)",
+        "Email filtering",
+        "Security awareness training",
+        "Phishing simulations",
+        "SSO with conditional access"
+      ],
+      "residual_likelihood": 2,
+      "residual_impact": 2,
+      "residual_risk_score": 4,
+      "residual_risk_rating": "Low",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Implement FIDO2 passwordless authentication",
+      "risk_owner": "Identity Manager",
+      "review_date": "2024-09-15"
+    },
+    {
+      "risk_id": "RISK-007",
+      "category": "Operational",
+      "title": "Key Personnel Dependency",
+      "description": "Critical operations dependent on limited number of key personnel",
+      "threat_source": "Internal",
+      "vulnerability": "Knowledge concentration",
+      "likelihood": 3,
+      "impact": 3,
+      "inherent_risk_score": 9,
+      "inherent_risk_rating": "Medium",
+      "existing_controls": [
+        "Documentation requirements",
+        "Cross-training programs",
+        "Succession planning",
+        "Knowledge base maintenance"
+      ],
+      "residual_likelihood": 2,
+      "residual_impact": 2,
+      "residual_risk_score": 4,
+      "residual_risk_rating": "Low",
+      "risk_treatment": "Mitigate",
+      "treatment_plan": "Formalize knowledge transfer procedures",
+      "risk_owner": "HR Director",
+      "review_date": "2024-12-15"
+    },
+    {
+      "risk_id": "RISK-008",
+      "category": "Cybersecurity",
+      "title": "Zero-Day Vulnerability Exploitation",
+      "description": "Exploitation of unknown vulnerabilities before patches available",
+      "threat_source": "Advanced persistent threats",
+      "vulnerability": "Unknown software vulnerabilities",
+      "likelihood": 2,
+      "impact": 5,
+      "inherent_risk_score": 10,
+      "inherent_risk_rating": "High",
+      "existing_controls": [
+        "Defense in depth architecture",
+        "Network monitoring",
+        "Endpoint detection",
+        "Threat intelligence feeds",
+        "Incident response capability"
+      ],
+      "residual_likelihood": 1,
+      "residual_impact": 4,
+      "residual_risk_score": 4,
+      "residual_risk_rating": "Low",
+      "risk_treatment": "Accept",
+      "treatment_plan": "Continue monitoring threat landscape, participate in ISACs",
+      "risk_owner": "CISO",
+      "review_date": "2024-09-15"
+    }
+  ],
+  
+  "risk_summary": {
+    "total_risks": 8,
+    "by_category": {
+      "Cybersecurity": 5,
+      "Operational": 2,
+      "Compliance": 1
+    },
+    "by_inherent_rating": {
+      "Critical": 1,
+      "High": 4,
+      "Medium": 3,
+      "Low": 0
+    },
+    "by_residual_rating": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 3,
+      "Low": 5
+    },
+    "by_treatment": {
+      "Mitigate": 6,
+      "Accept": 2,
+      "Transfer": 0,
+      "Avoid": 0
+    }
+  },
+  
+  "governance": {
+    "risk_committee_meeting_frequency": "monthly",
+    "last_committee_meeting": "2024-06-10",
+    "board_risk_report_frequency": "quarterly",
+    "last_board_report": "2024-04-15",
+    "risk_assessment_review_frequency": "annual",
+    "next_full_assessment": "2025-01-15"
+  }
+}

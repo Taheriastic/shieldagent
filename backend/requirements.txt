@@ -31,6 +31,9 @@ pandas==2.1.4
 # AI Integration (Google Gemini)
 google-generativeai==0.3.2
 
+# PDF Report Generation
+reportlab==4.0.8
+
 # Logging & Monitoring
 structlog==24.1.0
 python-json-logger==2.0.7
@@ -48,4 +51,5 @@ mypy==1.8.0
 
 # Utilities
 python-dotenv==1.0.0
+aiofiles==23.2.1
 aiofiles==23.2.1
