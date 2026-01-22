@@ -5,11 +5,10 @@ Document model for uploaded files.
 import uuid
 from datetime import datetime
 
-from sqlalchemy import String, DateTime, ForeignKey, func
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import String, DateTime, ForeignKey, func, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db import Base
+from db import Base, GUID
 
 
 class Document(Base):
@@ -18,12 +17,12 @@ class Document(Base):
     __tablename__ = "documents"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         primary_key=True,
         default=uuid.uuid4,
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -53,7 +52,7 @@ class Document(Base):
     )
     metadata_: Mapped[dict | None] = mapped_column(
         "metadata",
-        JSONB,
+        JSON,
         nullable=True,
         default=dict,
     )

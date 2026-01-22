@@ -16,7 +16,7 @@ class TestHealthCheck:
         
         assert response.status_code == 200
         data = response.json()
-        assert data["status"] == "healthy"
+        assert data["status"] == "ok"
 
     async def test_health_check_returns_version(self, client: AsyncClient):
         """Health check should return version info."""
