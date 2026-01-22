@@ -120,7 +120,7 @@ jobs:
   pr-check:
     name: PR Ready to Merge
     runs-on: ubuntu-latest
-    needs: [backend-test, frontend-test, security-scan]
+    needs: [backend-test, frontend-test, security-scan, docker-build]
     if: github.event_name == 'pull_request'
     steps:
       - name: All checks passed
@@ -129,6 +129,7 @@ jobs:
           echo "✅ Backend tests: Passed"
           echo "✅ Frontend build: Passed"
           echo "✅ Security scan: Passed"
+          echo "✅ Docker build: Passed"
           echo ""
           echo "This PR is ready for review and merge."
 
@@ -137,7 +138,6 @@ jobs:
     name: Docker Build
     runs-on: ubuntu-latest
     needs: [backend-test, frontend-test]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
     steps:
       - uses: actions/checkout@v4
@@ -151,6 +151,15 @@ jobs:
           context: ./backend
           push: false
           tags: shieldagent-backend:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Build frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: false
+          tags: shieldagent-frontend:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
