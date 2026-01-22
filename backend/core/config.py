@@ -92,7 +92,7 @@ class Settings(BaseSettings):
     upload_dir: str = "uploads"
     max_upload_size_mb: int = 50
     allowed_extensions: list[str] = Field(
-        default=["pdf", "csv", "json"],
+        default=["pdf", "csv", "json", "txt", "md"],
         description="Allowed file extensions for upload",
     )
 

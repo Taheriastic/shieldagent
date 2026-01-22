@@ -39,11 +39,12 @@ export function useAuth() {
   }, [])
 
   const login = useCallback(async (email: string, password: string) => {
-    const formData = new FormData()
-    formData.append('username', email)
-    formData.append('password', password)
+    // Use URLSearchParams for proper form encoding (OAuth2 expects this)
+    const params = new URLSearchParams()
+    params.append('username', email)
+    params.append('password', password)
 
-    const response = await api.post<Token>('/auth/login', formData, {
+    const response = await api.post<Token>('/auth/login', params, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     })
 

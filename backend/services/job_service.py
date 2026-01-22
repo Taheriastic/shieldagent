@@ -46,12 +46,16 @@ class JobService:
         Returns:
             The created Job object.
         """
+        # Determine total controls based on scan type
+        total_controls = 51 if job_data.scan_type == "full" else 8
+        
         job = Job(
             user_id=user_id,
             job_type=job_data.framework,
+            scan_type=job_data.scan_type,
             status=JobStatus.PENDING.value,
             progress=0,
-            total_controls=8,
+            total_controls=total_controls,
         )
 
         self.db.add(job)

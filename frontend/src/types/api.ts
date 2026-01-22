@@ -31,6 +31,7 @@ export interface DocumentListResponse {
 export interface Job {
   id: string
   job_type: string
+  scan_type?: 'quick' | 'full'
   status: 'PENDING' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'CANCELLED'
   progress: number
   total_controls: number
@@ -114,6 +115,7 @@ export interface LoginRequest {
 export interface CreateJobRequest {
   framework: string
   document_ids: string[]
+  scan_type?: 'quick' | 'full'
 }
 
 // API Error

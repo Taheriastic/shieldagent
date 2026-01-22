@@ -41,7 +41,12 @@ class Job(Base):
     job_type: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
-        default="soc2_lite",
+        default="soc2",
+    )
+    scan_type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="quick",
     )
     status: Mapped[str] = mapped_column(
         String(50),
