@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -23,14 +23,30 @@ interface JobStatus {
   error_message?: string
 }
 
+interface ControlResult {
+  control_id: string
+  status: string
+  summary?: string
+  confidence?: number
+  category?: string
+  title?: string
+  evidence_quote?: string
+  gaps?: string[]
+}
+
+interface CategoryResult {
+  name: string
+  count: number
+}
+
 interface AnalysisResult {
   job_id: string
   total_controls: number
   passing: number
   failing: number
   needs_review: number
-  controls: any[]
-  categories: any[]
+  controls: ControlResult[]
+  categories: CategoryResult[]
 }
 
 export default function AnalysisPage() {
@@ -41,28 +57,7 @@ export default function AnalysisPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    if (jobId) {
-      loadJob()
-    }
-  }, [jobId])
-
-  useEffect(() => {
-    // Poll for job status while running
-    if (job && (job.status === 'PENDING' || job.status === 'RUNNING')) {
-      const interval = setInterval(loadJob, 2000)
-      return () => clearInterval(interval)
-    }
-  }, [job?.status])
-
-  useEffect(() => {
-    // Load results when job succeeds
-    if (job?.status === 'SUCCEEDED') {
-      loadResults()
-    }
-  }, [job?.status])
-
-  const loadJob = async () => {
+  const loadJob = useCallback(async () => {
     try {
       const response = await api.get(`/jobs/${jobId}`)
       setJob(response.data)
@@ -72,9 +67,9 @@ export default function AnalysisPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [jobId])
 
-  const loadResults = async () => {
+  const loadResults = useCallback(async () => {
     try {
       const response = await api.get(`/jobs/${jobId}/evidence`)
       // Transform to dashboard format
@@ -90,7 +85,28 @@ export default function AnalysisPage() {
     } catch (err) {
       console.error('Failed to load results:', err)
     }
-  }
+  }, [jobId])
+
+  useEffect(() => {
+    if (jobId) {
+      loadJob()
+    }
+  }, [jobId, loadJob])
+
+  useEffect(() => {
+    // Poll for job status while running
+    if (job && (job.status === 'PENDING' || job.status === 'RUNNING')) {
+      const interval = setInterval(loadJob, 2000)
+      return () => clearInterval(interval)
+    }
+  }, [job, loadJob])
+
+  useEffect(() => {
+    // Load results when job succeeds
+    if (job?.status === 'SUCCEEDED') {
+      loadResults()
+    }
+  }, [job?.status, loadResults])
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -234,7 +250,9 @@ export default function AnalysisPage() {
               control_id: e.control_id,
               category: e.category || 'General',
               title: e.title || e.control_id,
-              status: e.status,
+              status: (e.status === 'pass' || e.status === 'fail' || e.status === 'needs_review') 
+                ? e.status 
+                : 'needs_review',
               confidence: e.confidence || 0.5,
               summary: e.summary || '',
               evidence_quote: e.evidence_quote,

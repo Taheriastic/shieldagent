@@ -6,11 +6,10 @@ import uuid
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import String, DateTime, Float, Text, ForeignKey, func
-from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
+from sqlalchemy import String, DateTime, Float, Text, ForeignKey, func, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db import Base
+from db import Base, GUID
 
 
 class EvidenceStatus(str, Enum):
@@ -36,12 +35,12 @@ class EvidenceItem(Base):
     __tablename__ = "evidence_items"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         primary_key=True,
         default=uuid.uuid4,
     )
     job_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         ForeignKey("jobs.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -74,15 +73,15 @@ class EvidenceItem(Base):
         nullable=True,
     )
     raw_llm_response: Mapped[dict | None] = mapped_column(
-        JSONB,
+        JSON,
         nullable=True,
     )
-    source_document_ids: Mapped[list[uuid.UUID] | None] = mapped_column(
-        ARRAY(UUID(as_uuid=True)),
+    source_document_ids: Mapped[str | None] = mapped_column(
+        Text,  # Store as JSON string for SQLite compatibility
         nullable=True,
     )
     evidence_metadata: Mapped[dict | None] = mapped_column(
-        JSONB,
+        JSON,
         nullable=True,
         default=dict,
     )
@@ -111,12 +110,12 @@ class Gap(Base):
     __tablename__ = "gaps"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         primary_key=True,
         default=uuid.uuid4,
     )
     job_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         ForeignKey("jobs.id", ondelete="CASCADE"),
         nullable=False,
         index=True,

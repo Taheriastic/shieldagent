@@ -7,10 +7,9 @@ from datetime import datetime
 from enum import Enum
 
 from sqlalchemy import String, DateTime, Integer, Text, ForeignKey, func
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from db import Base
+from db import Base, GUID
 
 
 class JobStatus(str, Enum):
@@ -28,12 +27,12 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         primary_key=True,
         default=uuid.uuid4,
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -41,7 +40,12 @@ class Job(Base):
     job_type: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
-        default="soc2_lite",
+        default="soc2",
+    )
+    scan_type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="quick",
     )
     status: Mapped[str] = mapped_column(
         String(50),

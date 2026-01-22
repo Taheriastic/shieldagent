@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { 
   Shield,
   ChevronRight, 
@@ -11,7 +11,7 @@ import {
   Eye,
   UserCheck,
   AlertTriangle,
-  HelpCircle
+  HelpCircle,
 } from 'lucide-react'
 import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from '../components/ui'
 import { api } from '../lib/axios'
@@ -31,6 +31,16 @@ interface ControlCategory {
   name: string
   count: number
   controls: string[]
+}
+
+interface ControlSummary {
+  total: number
+  full_scan_count?: number
+  by_category: Record<string, number>
+  by_check_type: Record<string, number>
+  summary?: {
+    categories?: Record<string, number>
+  }
 }
 
 const categoryIcons: Record<string, React.ReactNode> = {
@@ -72,16 +82,10 @@ export default function ControlsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [scanType, setScanType] = useState<'quick' | 'full'>('full')
   const [isLoading, setIsLoading] = useState(true)
-  const [summary, setSummary] = useState<any>(null)
+  const [summary, setSummary] = useState<ControlSummary | null>(null)
   const [expandedControl, setExpandedControl] = useState<string | null>(null)
 
-  useEffect(() => {
-    loadControls()
-    loadCategories()
-    loadSummary()
-  }, [scanType])
-
-  const loadControls = async () => {
+  const loadControls = useCallback(async () => {
     try {
       setIsLoading(true)
       const response = await api.get(`/controls?scan_type=${scanType}`)
@@ -91,25 +95,31 @@ export default function ControlsPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [scanType])
 
-  const loadCategories = async () => {
+  const loadCategories = useCallback(async () => {
     try {
       const response = await api.get('/controls/categories')
       setCategories(response.data.categories)
     } catch (error) {
       console.error('Failed to load categories:', error)
     }
-  }
+  }, [])
 
-  const loadSummary = async () => {
+  const loadSummary = useCallback(async () => {
     try {
       const response = await api.get('/controls/summary')
       setSummary(response.data)
     } catch (error) {
       console.error('Failed to load summary:', error)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    loadControls()
+    loadCategories()
+    loadSummary()
+  }, [scanType, loadControls, loadCategories, loadSummary])
 
   const filteredControls = controls.filter(control => {
     if (selectedCategory && control.category !== selectedCategory) return false

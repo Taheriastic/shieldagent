@@ -27,7 +27,7 @@ class TestCreateJob:
         assert response.status_code == 201
         data = response.json()
         assert "id" in data
-        assert data["framework"] == "soc2"
+        assert data["job_type"] == "soc2"
         assert data["status"] in ["PENDING", "RUNNING"]
         assert data["progress"] >= 0
 

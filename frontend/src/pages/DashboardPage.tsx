@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Play, FileText, AlertCircle } from 'lucide-react'
+import { Play, FileText, AlertCircle, Zap, Shield } from 'lucide-react'
 import { Button, Card, CardContent } from '../components/ui'
 import { ComplianceScore, RecentJobs } from '../components/dashboard'
 import { useDocuments } from '../hooks/useDocuments'
@@ -15,6 +15,7 @@ export default function DashboardPage() {
   
   const [isRunning, setIsRunning] = useState(false)
   const [error, setError] = useState('')
+  const [scanType, setScanType] = useState<'quick' | 'full'>('quick')
 
   // Get latest completed job for compliance score
   const latestJob = jobsData?.jobs.find((j) => j.status === 'SUCCEEDED')
@@ -31,8 +32,9 @@ export default function DashboardPage() {
 
     try {
       const job = await createJob.mutateAsync({
-        framework: 'soc2_lite',
+        framework: 'soc2',
         document_ids: documentsData.documents.map((d) => d.id),
+        scan_type: scanType,
       })
       navigate(`/jobs/${job.id}`)
     } catch (err) {
@@ -52,15 +54,42 @@ export default function DashboardPage() {
             SOC 2 compliance overview and quick actions
           </p>
         </div>
-        <Button
-          onClick={handleRunAnalysis}
-          isLoading={isRunning}
-          disabled={!documentsData?.documents.length}
-          size="lg"
-        >
-          <Play className="h-4 w-4 mr-2" />
-          Run Analysis
-        </Button>
+        <div className="flex items-center gap-3">
+          {/* Scan Type Selector */}
+          <div className="flex rounded-lg border border-gray-200 overflow-hidden">
+            <button
+              onClick={() => setScanType('quick')}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                scanType === 'quick'
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <Zap className="h-4 w-4" />
+              Quick (8)
+            </button>
+            <button
+              onClick={() => setScanType('full')}
+              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+                scanType === 'full'
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              <Shield className="h-4 w-4" />
+              Full (51)
+            </button>
+          </div>
+          <Button
+            onClick={handleRunAnalysis}
+            isLoading={isRunning}
+            disabled={!documentsData?.documents.length}
+            size="lg"
+          >
+            <Play className="h-4 w-4 mr-2" />
+            Run Analysis
+          </Button>
+        </div>
       </div>
 
       {/* Error Alert */}

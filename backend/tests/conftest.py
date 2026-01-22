@@ -135,9 +135,11 @@ async def test_job(test_db: AsyncSession, test_user: User) -> Job:
     job = Job(
         id=uuid4(),
         user_id=test_user.id,
-        framework="soc2",
+        job_type="soc2",
+        scan_type="quick",
         status=JobStatus.PENDING.value,
         progress=0,
+        total_controls=8,
     )
     test_db.add(job)
     await test_db.commit()

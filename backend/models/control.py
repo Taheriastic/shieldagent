@@ -6,10 +6,9 @@ import uuid
 from enum import Enum
 
 from sqlalchemy import String, Text
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from db import Base
+from db import Base, GUID
 
 
 class CheckType(str, Enum):
@@ -24,7 +23,7 @@ class Control(Base):
     __tablename__ = "controls"
 
     id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
+        GUID(),
         primary_key=True,
         default=uuid.uuid4,
     )

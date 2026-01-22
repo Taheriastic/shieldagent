@@ -3,6 +3,7 @@ Job-related Pydantic schemas for request/response validation.
 """
 
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -12,13 +13,17 @@ class JobCreate(BaseModel):
     """Schema for job creation request."""
 
     framework: str = Field(
-        default="soc2_lite",
+        default="soc2",
         description="Compliance framework to check against",
     )
     document_ids: list[UUID] = Field(
         ...,
         min_length=1,
         description="List of document IDs to analyze",
+    )
+    scan_type: Literal["quick", "full"] = Field(
+        default="quick",
+        description="Scan type: 'quick' for 8 key controls, 'full' for all 51 controls",
     )
 
 
@@ -29,6 +34,7 @@ class JobResponse(BaseModel):
 
     id: UUID
     job_type: str
+    scan_type: str = "quick"
     status: str
     progress: int
     total_controls: int

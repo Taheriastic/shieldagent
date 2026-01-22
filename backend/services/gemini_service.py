@@ -493,13 +493,14 @@ IMPORTANT: Respond ONLY with valid JSON in this exact format:
         return remediations.get(control_id, "Review control requirements and implement appropriate measures.")
 
 
-# Singleton instance
-_gemini_service: GeminiService | None = None
-
-
-def get_gemini_service() -> GeminiService:
-    """Get or create Gemini service instance."""
-    global _gemini_service
-    if _gemini_service is None:
-        _gemini_service = GeminiService()
-    return _gemini_service
+def get_gemini_service(scan_type: str = "quick") -> GeminiService:
+    """
+    Get a new Gemini service instance with specified scan type.
+    
+    Args:
+        scan_type: "quick" for 8 key controls, "full" for all 51 controls
+        
+    Returns:
+        GeminiService instance configured for the scan type
+    """
+    return GeminiService(scan_type=scan_type)

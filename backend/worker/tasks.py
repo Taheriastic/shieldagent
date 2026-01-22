@@ -25,13 +25,18 @@ def get_async_session():
     return sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 
-async def _run_analysis(job_id: str, document_ids: list[str]) -> dict:
+async def _run_analysis(
+    job_id: str,
+    document_ids: list[str],
+    scan_type: str = "quick",
+) -> dict:
     """
     Internal async function to run compliance analysis.
     
     Args:
         job_id: The job UUID string.
         document_ids: List of document UUID strings.
+        scan_type: "quick" for 8 controls, "full" for all 51.
         
     Returns:
         Analysis results dictionary.
@@ -67,12 +72,10 @@ async def _run_analysis(job_id: str, document_ids: list[str]) -> dict:
             
             # Get document file paths
             doc_paths = [doc.file_path for doc in documents]
-            doc_id_map = {doc.file_path: str(doc.id) for doc in documents}
             
-            # Initialize Gemini service
-            gemini = get_gemini_service()
+            # Initialize Gemini service with scan_type
+            gemini = get_gemini_service(scan_type=scan_type)
             controls = gemini.get_controls()
-            total_controls = len(controls)
             
             # Progress callback
             def update_progress(current, total, control_id):
@@ -87,6 +90,10 @@ async def _run_analysis(job_id: str, document_ids: list[str]) -> dict:
                         "progress": progress,
                     }
                 )
+            
+            # Update job total controls
+            job.total_controls = len(controls)
+            await db.commit()
             
             # Run analysis
             analysis_results = await gemini.analyze_documents(
@@ -164,13 +171,19 @@ async def _run_analysis(job_id: str, document_ids: list[str]) -> dict:
 
 
 @celery_app.task(bind=True, max_retries=3)
-def run_compliance_analysis(self, job_id: str, document_ids: list[str]) -> dict:
+def run_compliance_analysis(
+    self,
+    job_id: str,
+    document_ids: list[str],
+    scan_type: str = "quick",
+) -> dict:
     """
     Celery task to run compliance analysis on documents.
     
     Args:
         job_id: The job UUID string.
         document_ids: List of document UUID strings.
+        scan_type: "quick" for 8 controls, "full" for all 51.
         
     Returns:
         Analysis results dictionary.
@@ -180,7 +193,9 @@ def run_compliance_analysis(self, job_id: str, document_ids: list[str]) -> dict:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         try:
-            return loop.run_until_complete(_run_analysis(job_id, document_ids))
+            return loop.run_until_complete(
+                _run_analysis(job_id, document_ids, scan_type)
+            )
         finally:
             loop.close()
     except Exception as e:

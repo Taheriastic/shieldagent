@@ -35,6 +35,10 @@ async def create_evidence_run(
     
     This will start an async job that analyzes the provided documents
     against SOC 2 compliance controls.
+    
+    Args:
+        job_data: Job creation data including document_ids and scan_type
+            - scan_type: "quick" for 8 key controls, "full" for all 51
     """
     user_uuid = UUID(user_id)
     
@@ -51,7 +55,7 @@ async def create_evidence_run(
             detail="One or more documents not found",
         )
     
-    # Create job
+    # Create job with scan_type
     job_service = JobService(db)
     job = await job_service.create_job(
         job_data=job_data,
@@ -63,7 +67,8 @@ async def create_evidence_run(
         from worker.tasks import run_compliance_analysis
         task = run_compliance_analysis.delay(
             str(job.id),
-            [str(d) for d in job_data.document_ids]
+            [str(d) for d in job_data.document_ids],
+            job_data.scan_type,
         )
         # Update job with celery task ID
         job.celery_task_id = task.id
@@ -233,8 +238,16 @@ async def run_job_analysis(
         doc_paths = [doc.file_path for doc in documents]
         doc_ids = [doc.id for doc in documents]
         
-        # Initialize Gemini service and run analysis
-        gemini = get_gemini_service()
+        # Get scan_type from job (default to quick)
+        scan_type = getattr(job, 'scan_type', 'quick') or 'quick'
+        
+        # Initialize Gemini service with scan_type and run analysis
+        gemini = get_gemini_service(scan_type=scan_type)
+        
+        # Update total controls based on scan type
+        job.total_controls = len(gemini.get_controls())
+        await db.commit()
+        
         analysis_results = await gemini.analyze_documents(doc_paths)
         
         # Save evidence items
