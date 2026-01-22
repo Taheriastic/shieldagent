@@ -1,9 +1,10 @@
 """
-Pytest configuration and fixtures.
+Pytest configuration and fixtures for ShieldAgent tests.
 """
 
 import asyncio
 from typing import AsyncGenerator, Generator
+from uuid import uuid4
 
 import pytest
 import pytest_asyncio
@@ -17,6 +18,10 @@ from sqlalchemy.ext.asyncio import (
 from main import app
 from db import Base
 from core.dependencies import get_db
+from core.security import get_password_hash
+from models.user import User
+from models.document import Document
+from models.job import Job, JobStatus
 
 
 # Test database URL (use SQLite for testing)
@@ -74,3 +79,93 @@ async def client(test_db: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
         yield ac
     
     app.dependency_overrides.clear()
+
+
+@pytest_asyncio.fixture
+async def test_user(test_db: AsyncSession) -> User:
+    """Create a test user in the database."""
+    user = User(
+        id=uuid4(),
+        email="test@example.com",
+        hashed_password=get_password_hash("testpassword123"),
+        full_name="Test User",
+        is_active=True,
+    )
+    test_db.add(user)
+    await test_db.commit()
+    await test_db.refresh(user)
+    return user
+
+
+@pytest_asyncio.fixture
+async def test_user_token(test_user: User) -> str:
+    """Get a valid JWT token for the test user."""
+    from core.security import create_access_token
+    return create_access_token(data={"sub": str(test_user.id)})
+
+
+@pytest_asyncio.fixture
+async def auth_headers(test_user_token: str) -> dict:
+    """Get authorization headers with a valid token."""
+    return {"Authorization": f"Bearer {test_user_token}"}
+
+
+@pytest_asyncio.fixture
+async def test_document(test_db: AsyncSession, test_user: User) -> Document:
+    """Create a test document in the database."""
+    document = Document(
+        id=uuid4(),
+        user_id=test_user.id,
+        filename="test_doc_123.json",
+        original_filename="test_document.json",
+        file_type="json",
+        file_path="/tmp/test_doc_123.json",
+        file_size=1024,
+    )
+    test_db.add(document)
+    await test_db.commit()
+    await test_db.refresh(document)
+    return document
+
+
+@pytest_asyncio.fixture
+async def test_job(test_db: AsyncSession, test_user: User) -> Job:
+    """Create a test job in the database."""
+    job = Job(
+        id=uuid4(),
+        user_id=test_user.id,
+        framework="soc2",
+        status=JobStatus.PENDING.value,
+        progress=0,
+    )
+    test_db.add(job)
+    await test_db.commit()
+    await test_db.refresh(job)
+    return job
+
+
+@pytest.fixture
+def sample_security_policy() -> dict:
+    """Return a sample security policy for testing."""
+    return {
+        "organization": "Test Corp",
+        "document_type": "Security Policy",
+        "access_control_policy": {
+            "authentication": {
+                "mfa_required": True,
+                "password_requirements": {
+                    "min_length": 12,
+                    "require_uppercase": True,
+                }
+            }
+        }
+    }
+
+
+@pytest.fixture
+def sample_user_access_csv() -> str:
+    """Return sample user access CSV content."""
+    return """user_id,username,email,role,mfa_enabled,status
+U001,john.smith,john@test.com,admin,true,active
+U002,jane.doe,jane@test.com,user,true,active
+U003,bob.wilson,bob@test.com,user,false,inactive"""
