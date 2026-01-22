@@ -1,454 +1,906 @@
-# 🛡️ ShieldAgent<p align="center"># ShieldAgent 🛡️
+# ShieldAgent# 🛡️ ShieldAgent<p align="center"># ShieldAgent 🛡️
+
+
+
+An AI-powered SOC 2 compliance automation platform that analyzes your security documents and provides instant compliance insights. Upload policies, configurations, and documentation — get comprehensive gap analysis, risk scores, and audit-ready reports.
 
 
 
 **AI-Powered SOC 2 Compliance Automation Platform**  <img src="frontend/public/shield.svg" alt="ShieldAgent Logo" width="120" height="120">
 
-
-
-ShieldAgent automates SOC 2 evidence collection by analyzing your security documents using AI. Upload your policies, configurations, and documentation — get instant compliance insights.</p>**AI-Powered SOC 2 Compliance Automation Platform**
+## Documentation Guide
 
 
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+This main README provides a high-level overview of the ShieldAgent project, including:
 
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
+- **Quick Start Instructions**: Steps to run the application using Docker.ShieldAgent automates SOC 2 evidence collection by analyzing your security documents using AI. Upload your policies, configurations, and documentation — get instant compliance insights.</p>**AI-Powered SOC 2 Compliance Automation Platform**
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green.svg)](https://fastapi.tiangolo.com)<h1 align="center">🛡️ ShieldAgent</h1>ShieldAgent automates SOC 2 evidence collection by analyzing your security documents, configurations, and policies using AI. It covers all 5 Trust Service Categories with 50+ controls for comprehensive compliance assessment.
+- **Project Structure**: A breakdown of the folder and file organization.
 
-[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org)
+- **API Endpoints**: A summary of the available backend API routes.
+
+- **Environment Variables**: Key configuration options for the project.
+
+- **Alternate Development Setup**: Instructions for running the project locally without Docker.[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+
+
+For more detailed information about specific parts of the project, refer to the following:[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
+
+
+
+- **Frontend Documentation**: The `frontend/README.md` contains details about the React-based frontend, including its architecture, available scripts, development setup, and testing. It provides insights into component structure, hooks, and state management patterns.[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green.svg)](https://fastapi.tiangolo.com)<h1 align="center">🛡️ ShieldAgent</h1>ShieldAgent automates SOC 2 evidence collection by analyzing your security documents, configurations, and policies using AI. It covers all 5 Trust Service Categories with 50+ controls for comprehensive compliance assessment.
+
+
+
+- **Backend Documentation**: The `backend/README.md` provides an in-depth look at the FastAPI-based backend, including its project structure, API endpoints, authentication, database setup, and testing. It also includes instructions for running the backend locally or with Docker.[![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org)
+
+
+
+Testing instructions for both the frontend and backend are detailed in their respective READMEs.
 
 
 
 ---
+
+## Deployment Guide
 
 <p align="center">![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+### Quick Start (Docker)
+
 ## 📋 Table of Contents
+
+The easiest way to run the application is with Docker.
 
   <strong>AI-Powered SOC 2 Compliance Automation Platform</strong>![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 
-- [Features](#-features)
+0. **Prerequisites**
 
-- [Quick Start](#-quick-start)</p>![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green.svg)
+- [Docker](https://docs.docker.com/get-docker/)- [Features](#-features)
 
-- [Architecture](#-architecture)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-- [SOC 2 Coverage](#-soc-2-coverage)![React](https://img.shields.io/badge/React-18-blue.svg)
-
-- [API Reference](#-api-reference)
-
-- [Development](#-development)<p align="center">![SOC 2](https://img.shields.io/badge/SOC_2-50%2B_Controls-success.svg)
-
-- [Testing](#-testing)
-
-- [Deployment](#-deployment)  <a href="#-features">Features</a> •
+- [Google Gemini API Key](https://makersuite.google.com/app/apikey)- [Quick Start](#-quick-start)</p>![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green.svg)
 
 
 
----  <a href="#-quick-start">Quick Start</a> •## 🎯 Features
+1. **Set up environment variables:**- [Architecture](#-architecture)
+
+   ```bash
+
+   cp .env.example .env- [SOC 2 Coverage](#-soc-2-coverage)![React](https://img.shields.io/badge/React-18-blue.svg)
+
+   ```
+
+   Edit `.env` and configure:- [API Reference](#-api-reference)
+
+   - `GEMINI_API_KEY` - Your Google Gemini API key (required)
+
+   - `SECRET_KEY` - JWT signing key (required, min 32 chars)- [Development](#-development)<p align="center">![SOC 2](https://img.shields.io/badge/SOC_2-50%2B_Controls-success.svg)
 
 
 
-## ✨ Features  <a href="#-architecture">Architecture</a> •
+2. **Build, create and start containers:**- [Testing](#-testing)
+
+   ```bash
+
+   docker compose up- [Deployment](#-deployment)  <a href="#-features">Features</a> •
+
+   ```
+
+   Or use the start script:
+
+   ```bash
+
+   ./start.sh---  <a href="#-quick-start">Quick Start</a> •## 🎯 Features
+
+   ```
 
 
 
-| Feature | Description |  <a href="#-api-reference">API</a> •- **📄 Document Upload**: Upload PDFs, CSVs, JSON, and text configuration files
+What you get:
+
+- PostgreSQL 16 on `5432`## ✨ Features  <a href="#-architecture">Architecture</a> •
+
+- Redis 7 on `6379`
+
+- Backend API on `http://localhost:8000`
+
+- Frontend on `http://localhost:5173`
+
+- API Docs at `http://localhost:8000/docs`| Feature | Description |  <a href="#-api-reference">API</a> •- **📄 Document Upload**: Upload PDFs, CSVs, JSON, and text configuration files
+
+- Health at `http://localhost:8000/api/health` → `{"status": "healthy"}`
 
 |---------|-------------|
 
+`docker-compose.yml` wires all environment variables (including `DATABASE_URL`) for you.
+
 | 📄 **Document Upload** | Support for PDF, CSV, JSON, TXT, and MD files |  <a href="#-soc-2-coverage">SOC 2 Coverage</a> •- **🤖 AI-Powered Analysis**: Uses Google Gemini to analyze security policies and evidence
 
-| 🤖 **AI Analysis** | Google Gemini-powered document analysis |
 
-| 🔍 **51 Controls** | Complete SOC 2 Trust Service Criteria coverage |  <a href="#-testing">Testing</a>- **🔍 Comprehensive Coverage**: 50+ SOC 2 controls across all Trust Service Categories
+
+### Continued Operations with Docker| 🤖 **AI Analysis** | Google Gemini-powered document analysis |
+
+
+
+#### Making Changes and Switching Branches| 🔍 **51 Controls** | Complete SOC 2 Trust Service Criteria coverage |  <a href="#-testing">Testing</a>- **🔍 Comprehensive Coverage**: 50+ SOC 2 controls across all Trust Service Categories
+
+Docker caches image layers, so when switching branches or making changes, Docker may use cached images that contain older code. To ensure you're running the latest code:
 
 | ⚡ **Quick Scan** | Fast 8-control assessment for rapid insights |
 
-| 🔄 **Full Scan** | Comprehensive 51-control deep analysis |</p>- **📊 Risk Scoring**: Intelligent risk calculation with weighted category scores
+```bash
+
+# Stop containers and remove volumes (use -v if you expect DB schema changes)| 🔄 **Full Scan** | Comprehensive 51-control deep analysis |</p>- **📊 Risk Scoring**: Intelligent risk calculation with weighted category scores
+
+docker compose down -v
 
 | 📊 **Risk Scoring** | Weighted risk calculation across categories |
 
-| 🚨 **Gap Analysis** | Identifies gaps with severity ratings |- **📈 Compliance Dashboard**: Real-time compliance scores and evidence tracking
+# Rebuild images without cache to ensure fresh builds
 
-| 📋 **Remediation** | Prioritized action plans with time estimates |
-
-| 📑 **PDF Reports** | Audit-ready compliance reports |<p align="center">- **🚨 Gap Analysis**: Identifies compliance gaps with severity ratings
+docker compose build --no-cache| 🚨 **Gap Analysis** | Identifies gaps with severity ratings |- **📈 Compliance Dashboard**: Real-time compliance scores and evidence tracking
 
 
 
----  <img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python">- **📋 Remediation Tracking**: Prioritized remediation plans with time estimates
+# Start services with rebuilt images| 📋 **Remediation** | Prioritized action plans with time estimates |
+
+docker compose up
+
+```| 📑 **PDF Reports** | Audit-ready compliance reports |<p align="center">- **🚨 Gap Analysis**: Identifies compliance gaps with severity ratings
 
 
 
-## 🚀 Quick Start  <img src="https://img.shields.io/badge/FastAPI-0.109-green.svg" alt="FastAPI">- **📑 PDF Reports**: Generate audit-ready compliance reports
+#### Docker Commands
 
 
 
-### Prerequisites  <img src="https://img.shields.io/badge/React-18-blue.svg" alt="React">- **⚡ Quick Scan Mode**: Fast assessment using 8 critical controls
+```bash---  <img src="https://img.shields.io/badge/python-3.11+-blue.svg" alt="Python">- **📋 Remediation Tracking**: Prioritized remediation plans with time estimates
+
+# Start services (foreground)
+
+docker compose up
 
 
+
+# Start services (background)## 🚀 Quick Start  <img src="https://img.shields.io/badge/FastAPI-0.109-green.svg" alt="FastAPI">- **📑 PDF Reports**: Generate audit-ready compliance reports
+
+docker compose up -d
+
+
+
+# View logs
+
+docker compose logs -f### Prerequisites  <img src="https://img.shields.io/badge/React-18-blue.svg" alt="React">- **⚡ Quick Scan Mode**: Fast assessment using 8 critical controls
+
+
+
+# Stop services
+
+docker compose down
 
 - Docker & Docker Compose  <img src="https://img.shields.io/badge/TypeScript-5.0-blue.svg" alt="TypeScript">- **🔄 Full Scan Mode**: Comprehensive analysis of all 50+ controls
 
-- Google Gemini API key ([Get one here](https://makersuite.google.com/app/apikey))
+# Rebuild after code changes
 
-  <img src="https://img.shields.io/badge/SOC_2-51_Controls-success.svg" alt="SOC 2">
+docker compose up --build- Google Gemini API key ([Get one here](https://makersuite.google.com/app/apikey))
 
-### 1. Clone & Configure
+
+
+# Delete the database (for reinitialization)  <img src="https://img.shields.io/badge/SOC_2-51_Controls-success.svg" alt="SOC 2">
+
+docker compose down -v
+
+```### 1. Clone & Configure
+
+
 
   <img src="https://img.shields.io/badge/Test_Coverage-Comprehensive-brightgreen.svg" alt="Tests">## 🏗️ Architecture
 
+### Environment Variables
+
 ```bash
+
+The application can be customized using environment variables. A template file `.env.example` is provided with all available options.
 
 git clone https://github.com/Taheriastic/shieldagent.git  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
 
+#### Available Environment Variables
+
 cd shieldagent
 
-</p>```
+| Variable | Description | Default |
 
-# Create environment file
+|----------|-------------|---------|</p>```
 
-cp .env.example .env┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql+asyncpg://shieldagent:shieldagent@localhost:5432/shieldagent` |
 
-```
+| `REDIS_URL` | Redis connection string | `redis://localhost:6379/0` |# Create environment file
+
+| `SECRET_KEY` | JWT signing key (**MUST change in production**) | `dev-secret-key-change-in-production` |
+
+| `GEMINI_API_KEY` | Google Gemini API key (**required**) | None |cp .env.example .env┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+
+| `DEBUG` | Enable debug mode | `False` |
+
+| `CORS_ORIGINS` | Allowed CORS origins (comma-separated) | `http://localhost:5173` |```
+
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | JWT token expiration time | `30` |
 
 ---│  React Frontend │────▶│  FastAPI Backend │────▶│  PostgreSQL DB  │
 
+**⚠️ Security Warning**: Never commit your `.env` file to version control. The `.env` file is already in `.gitignore`.
+
 Edit `.env` and add your Gemini API key:
+
+---
 
 └─────────────────┘     └────────┬────────┘     └─────────────────┘
 
+## Alternate Development Setup
+
 ```env
+
+For development, you may want to run the services directly on your machine instead of in Docker containers.
 
 GEMINI_API_KEY=your_api_key_here## 📋 Table of Contents                                 │
 
+**Note**: This requires more setup than using Docker. The Docker approach (above) is recommended for simplicity.
+
 SECRET_KEY=your_secret_key_here
+
+### 0. Prerequisites
 
 ```                                 ▼
 
+1. **Start PostgreSQL and Redis** (required for backend):
+
+   ```bash
+
+   docker compose up postgres redis -d
+
+   ```### 2. Start with Docker- [Overview](#-overview)                        ┌─────────────────┐
+
+   This starts only the database containers. The backend and frontend will run directly on your machine.
 
 
-### 2. Start with Docker- [Overview](#-overview)                        ┌─────────────────┐
 
+2. **Set up environment variables**:
 
+   ```bash```bash- [Features](#-features)                        │   Redis Queue   │
 
-```bash- [Features](#-features)                        │   Redis Queue   │
+   cp .env.example .env
 
-# Start all services
+   # Edit .env with your GEMINI_API_KEY# Start all services
+
+   ```
 
 docker-compose up -d- [Quick Start](#-quick-start)                        └────────┬────────┘
 
+### 1. Start Backend API
 
 
-# Or use the start script- [Architecture](#-architecture)                                 │
 
-./start.sh
+```bash
 
-```- [SOC 2 Coverage](#-soc-2-coverage)                                 ▼
+cd backend# Or use the start script- [Architecture](#-architecture)                                 │
 
 
+
+# Create virtual environment./start.sh
+
+python -m venv venv
+
+source venv/bin/activate  # On Windows: venv\Scripts\activate```- [SOC 2 Coverage](#-soc-2-coverage)                                 ▼
+
+
+
+# Install dependencies
+
+pip install -r requirements.txt
 
 ### 3. Access the App- [API Reference](#-api-reference)                        ┌─────────────────┐     ┌─────────────────┐
 
+# Run database migrations
 
-
-| Service | URL |- [Frontend Guide](#-frontend-guide)                        │  Celery Worker  │────▶│  Google Gemini  │
-
-|---------|-----|
-
-| Frontend | http://localhost:5173 |- [Configuration](#-configuration)                        └─────────────────┘     └─────────────────┘
-
-| Backend API | http://localhost:8000 |
-
-| API Docs | http://localhost:8000/docs |- [Testing](#-testing)```
+alembic upgrade head
 
 
 
-### 4. First Steps- [Deployment](#-deployment)
+# Start server| Service | URL |- [Frontend Guide](#-frontend-guide)                        │  Celery Worker  │────▶│  Google Gemini  │
+
+uvicorn main:app --reload --port 8000
+
+```|---------|-----|
 
 
 
-1. **Sign up** at http://localhost:5173/signup- [Contributing](#-contributing)## 🚀 Quick Start
+✅ API runs at: **http://localhost:8000**| Frontend | http://localhost:5173 |- [Configuration](#-configuration)                        └─────────────────┘     └─────────────────┘
 
-2. **Upload** your security documents (policies, configs, etc.)
 
-3. **Run analysis** — choose Quick Scan (8 controls) or Full Scan (51 controls)
 
-4. **Review results** and download your compliance report
+Test it: Open http://localhost:8000/docs in your browser| Backend API | http://localhost:8000 |
 
----### Prerequisites
+
+
+### 2. Start Celery Worker (in new terminal)| API Docs | http://localhost:8000/docs |- [Testing](#-testing)```
+
+
+
+```bash
+
+cd backend
+
+source venv/bin/activate### 4. First Steps- [Deployment](#-deployment)
+
+celery -A worker.celery_app worker --loglevel=info
+
+```
+
+
+
+✅ Worker processes background analysis jobs1. **Sign up** at http://localhost:5173/signup- [Contributing](#-contributing)## 🚀 Quick Start
+
+
+
+### 3. Start Frontend (in new terminal)2. **Upload** your security documents (policies, configs, etc.)
+
+
+
+```bash3. **Run analysis** — choose Quick Scan (8 controls) or Full Scan (51 controls)
+
+cd frontend
+
+npm install  # first time only4. **Review results** and download your compliance report
+
+npm run dev
+
+```---### Prerequisites
+
+
+
+✅ Frontend runs at: **http://localhost:5173**---
+
+
 
 ---
 
 
 
-## 🏗️ Architecture
+## API Endpoints## 🏗️ Architecture
 
-## 🌟 Overview- Docker & Docker Compose
 
-```
 
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐- Python 3.11+ (for local development)
+All endpoints start with `/api/`:## 🌟 Overview- Docker & Docker Compose
+
+
+
+**Authentication:**```
+
+- `POST /api/auth/register` - Register a new user
+
+- `POST /api/auth/login` - Login and receive JWT token┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐- Python 3.11+ (for local development)
+
+- `GET /api/auth/me` - Get current user info (requires authentication)
 
 │  React + Vite   │────▶│  FastAPI        │────▶│  PostgreSQL     │
 
-│  (Frontend)     │     │  (Backend)      │     │  (Database)     │**ShieldAgent** is a comprehensive AI-powered platform that automates SOC 2 compliance evidence collection and gap analysis. Upload your security policies, configurations, and documentation, and let our AI analyze them against all 51 SOC 2 Trust Service Criteria controls.- Node.js 18+ (for frontend development)
+**Documents:**
 
-└─────────────────┘     └────────┬────────┘     └─────────────────┘
+- `POST /api/documents/upload` - Upload a document (PDF, CSV, JSON, TXT, MD)│  (Frontend)     │     │  (Backend)      │     │  (Database)     │**ShieldAgent** is a comprehensive AI-powered platform that automates SOC 2 compliance evidence collection and gap analysis. Upload your security policies, configurations, and documentation, and let our AI analyze them against all 51 SOC 2 Trust Service Criteria controls.- Node.js 18+ (for frontend development)
+
+- `GET /api/documents` - List all documents for current user
+
+- `GET /api/documents/:id` - Get specific document└─────────────────┘     └────────┬────────┘     └─────────────────┘
+
+- `DELETE /api/documents/:id` - Delete a document
 
                                  │
 
-                                 ▼
+**Analysis Jobs:**
 
-                        ┌─────────────────┐### Why ShieldAgent?### Using Docker (Recommended)
+- `POST /api/jobs/evidence-run` - Start compliance analysis                                 ▼
 
-                        │  Redis + Celery │
+- `GET /api/jobs` - List all jobs for current user
 
-                        │  (Task Queue)   │
+- `GET /api/jobs/:id` - Get job status and details                        ┌─────────────────┐### Why ShieldAgent?### Using Docker (Recommended)
 
-                        └────────┬────────┘
+- `GET /api/jobs/:id/evidence` - Get evidence results
+
+- `GET /api/jobs/:id/gaps` - Get compliance gaps                        │  Redis + Celery │
+
+
+
+**Risk & Reports:**                        │  (Task Queue)   │
+
+- `GET /api/risk/:job_id/score` - Get risk scores by category
+
+- `GET /api/risk/:job_id/remediation` - Get prioritized remediation plan                        └────────┬────────┘
+
+- `GET /api/reports/:job_id/pdf` - Download PDF compliance report
 
                                  │| Traditional Compliance | With ShieldAgent |```bash
 
-                                 ▼
+**Controls:**
+
+- `GET /api/controls` - List all SOC 2 controls                                 ▼
+
+- `GET /api/controls/:id` - Get specific control details
 
                         ┌─────────────────┐|----------------------|------------------|# Clone the repository
 
-                        │  Google Gemini  │
+**Health:**
 
-                        │  (AI Analysis)  │| 📅 Weeks of manual review | ⚡ Minutes with AI analysis |git clone https://github.com/Taheriastic/shieldagent.git
-
-                        └─────────────────┘
-
-```| 📝 Spreadsheet tracking | 📊 Real-time dashboard |cd shieldagent
+- `GET /api/health` - Health check endpoint                        │  Google Gemini  │
 
 
+
+---                        │  (AI Analysis)  │| 📅 Weeks of manual review | ⚡ Minutes with AI analysis |git clone https://github.com/Taheriastic/shieldagent.git
+
+
+
+## Troubleshooting                        └─────────────────┘
+
+
+
+Here are some common issues and their resolutions:```| 📝 Spreadsheet tracking | 📊 Real-time dashboard |cd shieldagent
+
+
+
+- **Port Already in Use**:
+
+  - Stop any processes using the conflicting port or change the port in the `.env` file.
 
 ### Tech Stack| 🔍 Point-in-time audits | 🔄 Continuous monitoring |
 
+- **Database Connection Issues**:
 
+  - Verify the `DATABASE_URL` is correct and PostgreSQL is running.
+
+  - Check with: `docker compose ps` to see container status.
 
 | Layer | Technology || 💰 Expensive consultants | 🤖 Automated assessment |# Copy environment file
 
-|-------|------------|
+- **Redis Connection Issues**:
+
+  - Ensure Redis is running: `docker compose up redis -d`|-------|------------|
+
+  - Check the `REDIS_URL` environment variable.
 
 | Frontend | React 18, TypeScript, Vite, TailwindCSS || 📋 Paper-based evidence | 🔗 Direct document linking |cp backend/.env.example backend/.env
 
-| Backend | Python 3.11, FastAPI, SQLAlchemy, Pydantic |
+- **Gemini API Errors**:
+
+  - Verify your `GEMINI_API_KEY` is valid and has quota remaining.| Backend | Python 3.11, FastAPI, SQLAlchemy, Pydantic |
+
+  - Check the backend logs: `docker compose logs backend`
 
 | Database | PostgreSQL 16 |
 
-| Queue | Redis 7, Celery |
+- **Frontend Not Loading**:
+
+  - Check the browser console for errors.| Queue | Redis 7, Celery |
+
+  - Ensure the frontend service is running: `docker compose logs frontend`
 
 | AI | Google Gemini 1.5 Flash |---# Edit .env and add your Gemini API key
 
-| Auth | JWT (OAuth2 Password Flow) |
+- **Analysis Jobs Stuck in "pending"**:
+
+  - Ensure the Celery worker is running.| Auth | JWT (OAuth2 Password Flow) |
+
+  - Check worker logs: `docker compose logs celery`
 
 # GEMINI_API_KEY=your-api-key-here
 
 ---
 
+---
+
+## Architecture Overview
+
 ## ✨ Features
+
+The ShieldAgent application follows a modular architecture with clear separation between frontend, backend, and infrastructure layers:
 
 ## 🔒 SOC 2 Coverage
 
-# Start all services
+```
 
-ShieldAgent covers all **5 Trust Service Categories** with **51 controls**:
+┌─────────────────────────────────────────────────────────────────┐# Start all services
 
-### 🔍 Document Analysismake docker-up
+│                      Docker Containers                          │
 
-### Trust Service Categories
+│                                                                 │ShieldAgent covers all **5 Trust Service Categories** with **51 controls**:
 
-- **Multi-format Support**: PDF, CSV, JSON, TXT, and Markdown files
+│  ┌───────────────────────────────────────────────────────────┐  │
 
-| Category | Controls | Description |
+│  │                  Frontend (React + Vite)                  │  │### 🔍 Document Analysismake docker-up
 
-|----------|----------|-------------|- **AI-Powered Review**: Google Gemini analyzes documents against controls# API will be available at http://localhost:8000
+│  │  - User Interface with TailwindCSS                        │  │
 
-| **CC** - Common Criteria | 29 | Security policies, access controls, risk management |
+│  │  - API Communication via Axios                            │  │### Trust Service Categories
 
-| **A** - Availability | 3 | System uptime, disaster recovery, capacity planning |- **Evidence Extraction**: Automatic quote extraction from documents# Docs at http://localhost:8000/docs
+│  │  - State Management with React Hooks                      │  │
 
-| **PI** - Processing Integrity | 5 | Data accuracy, completeness, authorization |
+│  │  - TypeScript for Type Safety                             │  │- **Multi-format Support**: PDF, CSV, JSON, TXT, and Markdown files
 
-| **C** - Confidentiality | 2 | Data classification, encryption, protection |- **Batch Processing**: Analyze multiple documents simultaneously```
+│  └───────────────────────────────────────────────────────────┘  │
 
-| **P** - Privacy | 8 | Personal data handling, consent, retention |
+│                              │                                  │| Category | Controls | Description |
 
+│                              ▼                                  │
 
+│  ┌───────────────────────────────────────────────────────────┐  │|----------|----------|-------------|- **AI-Powered Review**: Google Gemini analyzes documents against controls# API will be available at http://localhost:8000
 
-### Scan Modes
+│  │                   Backend (FastAPI)                       │  │
 
-### 📊 Compliance Dashboard### Local Development
+│  │  - REST API Endpoints (/api/*)                            │  │| **CC** - Common Criteria | 29 | Security policies, access controls, risk management |
 
-**Quick Scan (8 controls)** — Fast assessment covering critical areas:
+│  │  - JWT Authentication (OAuth2 Password Flow)              │  │
 
-- CC6.1: Logical Access Security- **Real-time Scores**: Overall compliance percentage and risk level
+│  │  - Pydantic Schema Validation                             │  │| **A** - Availability | 3 | System uptime, disaster recovery, capacity planning |- **Evidence Extraction**: Automatic quote extraction from documents# Docs at http://localhost:8000/docs
 
-- CC6.2: User Registration & Authorization
+│  │  - Async SQLAlchemy ORM                                   │  │
 
-- CC6.3: Access Removal- **Category Breakdown**: Scores by Trust Service Category```bash
+│  └───────────────────────────────────────────────────────────┘  │| **PI** - Processing Integrity | 5 | Data accuracy, completeness, authorization |
 
-- CC7.2: Security Monitoring
+│                              │                                  │
 
-- CC8.1: Change Management- **Gap Visualization**: Interactive charts showing compliance gaps# Install backend dependencies
+│              ┌───────────────┼───────────────┐                  │| **C** - Confidentiality | 2 | Data classification, encryption, protection |- **Batch Processing**: Analyze multiple documents simultaneously```
 
-- A1.2: Disaster Recovery
+│              ▼               ▼               ▼                  │
 
-- C1.1: Confidentiality Policies- **Trend Tracking**: Historical compliance score trendscd backend
+│  ┌─────────────────┐ ┌─────────────┐ ┌─────────────────────┐   │| **P** - Privacy | 8 | Personal data handling, consent, retention |
 
-- P3.1: Data Collection Practices
+│  │   PostgreSQL    │ │    Redis    │ │   Celery Worker     │   │
 
-python -m venv venv
+│  │  - User Data    │ │  - Task     │ │  - Background Jobs  │   │
 
-**Full Scan (51 controls)** — Complete SOC 2 compliance check
+│  │  - Documents    │ │    Queue    │ │  - AI Analysis      │   │
 
-### 🎯 Risk Assessmentsource venv/bin/activate  # On Windows: venv\Scripts\activate
+│  │  - Evidence     │ │  - Caching  │ │  - Gemini API Calls │   │### Scan Modes
 
----
+│  │  - Jobs         │ │             │ │                     │   │
 
-- **Weighted Scoring**: Industry-standard category weightingpip install -r requirements.txt
+│  └─────────────────┘ └─────────────┘ └─────────────────────┘   │### 📊 Compliance Dashboard### Local Development
 
-## 📡 API Reference
+│                                              │                  │
 
-- **Risk Levels**: Critical, High, Medium, Low, Minimal classifications
+│                                              ▼                  │**Quick Scan (8 controls)** — Fast assessment covering critical areas:
 
-### Authentication
+│                              ┌───────────────────────────────┐  │
 
-- **Audit Readiness**: Automated readiness assessment# Start PostgreSQL and Redis (via Docker)
+│                              │      Google Gemini API        │  │- CC6.1: Logical Access Security- **Real-time Scores**: Overall compliance percentage and risk level
 
-```bash
+│                              │  - Document Analysis          │  │
 
-# Register- **Remediation Estimates**: Time-to-fix calculationsdocker-compose up -d postgres redis
+│                              │  - Evidence Extraction        │  │- CC6.2: User Registration & Authorization
 
-POST /api/auth/register
+│                              │  - Gap Identification         │  │
 
-{
+│                              └───────────────────────────────┘  │- CC6.3: Access Removal- **Category Breakdown**: Scores by Trust Service Category```bash
 
-  "email": "user@example.com",
+└─────────────────────────────────────────────────────────────────┘
 
-  "password": "securepassword",### 📋 Remediation Tracking# Run the API
-
-  "full_name": "John Doe"
-
-}- **Prioritized Tasks**: Gaps sorted by severity and impactuvicorn main:app --reload
+```- CC7.2: Security Monitoring
 
 
 
-# Login- **Progress Tracking**: Task completion monitoring
-
-POST /api/auth/login
-
-Content-Type: application/x-www-form-urlencoded- **Time Estimates**: Hours-to-remediate calculations# In another terminal, start Celery worker
+### Data Flow- CC8.1: Change Management- **Gap Visualization**: Interactive charts showing compliance gaps# Install backend dependencies
 
 
 
-username=user@example.com&password=securepassword- **Recommendations**: AI-generated remediation suggestionscelery -A worker.celery_app worker --loglevel=info
+1. **User Authentication**: User registers/logs in → Backend validates → JWT token issued- A1.2: Disaster Recovery
+
+2. **Document Upload**: User uploads file → Backend stores in filesystem → Metadata saved to PostgreSQL
+
+3. **Analysis Request**: User starts scan → Job created → Task queued in Redis- C1.1: Confidentiality Policies- **Trend Tracking**: Historical compliance score trendscd backend
+
+4. **AI Processing**: Celery worker picks up task → Sends to Gemini API → Results stored
+
+5. **Results Display**: Frontend polls job status → Fetches evidence/gaps → Renders dashboard- P3.1: Data Collection Practices
 
 
 
-# Response```
+### Key Featurespython -m venv venv
 
-{
 
-  "access_token": "eyJ...",### 📑 Reporting
 
-  "token_type": "bearer"
+- **Frontend**:**Full Scan (51 controls)** — Complete SOC 2 compliance check
 
-}- **PDF Reports**: Audit-ready compliance reports## 📋 SOC 2 Trust Service Categories Coverage
+  - Built with React 18 and TypeScript
+
+  - Vite for fast development and builds### 🎯 Risk Assessmentsource venv/bin/activate  # On Windows: venv\Scripts\activate
+
+  - TailwindCSS for styling
+
+  - Custom hooks for authentication and API calls---
+
+
+
+- **Backend**:- **Weighted Scoring**: Industry-standard category weightingpip install -r requirements.txt
+
+  - FastAPI with async/await support
+
+  - SQLAlchemy 2.0 with async sessions## 📡 API Reference
+
+  - Pydantic for request/response validation
+
+  - Alembic for database migrations- **Risk Levels**: Critical, High, Medium, Low, Minimal classifications
+
+
+
+- **AI Analysis**:### Authentication
+
+  - Google Gemini 1.5 Flash for document analysis
+
+  - 51 SOC 2 controls mapped to Trust Service Categories- **Audit Readiness**: Automated readiness assessment# Start PostgreSQL and Redis (via Docker)
+
+  - Quick scan (8 controls) and full scan (51 controls) modes
+
+  - Weighted risk scoring algorithm```bash
+
+
+
+- **Infrastructure**:# Register- **Remediation Estimates**: Time-to-fix calculationsdocker-compose up -d postgres redis
+
+  - PostgreSQL for persistent storage
+
+  - Redis for task queue and cachingPOST /api/auth/register
+
+  - Celery for background job processing
+
+  - Docker Compose for orchestration{
+
+
+
+---  "email": "user@example.com",
+
+
+
+## Project Structure  "password": "securepassword",### 📋 Remediation Tracking# Run the API
+
+
+
+```  "full_name": "John Doe"
+
+shieldagent/
+
+├── backend/}- **Prioritized Tasks**: Gaps sorted by severity and impactuvicorn main:app --reload
+
+│   ├── api/                  # API route handlers
+
+│   │   ├── auth.py           # Authentication endpoints
+
+│   │   ├── documents.py      # Document management
+
+│   │   ├── jobs.py           # Analysis jobs# Login- **Progress Tracking**: Task completion monitoring
+
+│   │   ├── reports.py        # PDF generation
+
+│   │   ├── risk.py           # Risk scoringPOST /api/auth/login
+
+│   │   ├── controls.py       # SOC 2 controls
+
+│   │   └── health.py         # Health checksContent-Type: application/x-www-form-urlencoded- **Time Estimates**: Hours-to-remediate calculations# In another terminal, start Celery worker
+
+│   ├── core/                 # Core configuration
+
+│   │   ├── config.py         # Settings management
+
+│   │   ├── security.py       # JWT & password hashing
+
+│   │   └── dependencies.py   # FastAPI dependenciesusername=user@example.com&password=securepassword- **Recommendations**: AI-generated remediation suggestionscelery -A worker.celery_app worker --loglevel=info
+
+│   ├── models/               # SQLAlchemy models
+
+│   ├── schemas/              # Pydantic schemas
+
+│   ├── services/             # Business logic
+
+│   │   ├── gemini_service.py # AI integration# Response```
+
+│   │   ├── risk_calculator.py# Risk scoring
+
+│   │   └── soc2_controls.py  # Control definitions{
+
+│   ├── worker/               # Celery configuration
+
+│   ├── alembic/              # Database migrations  "access_token": "eyJ...",### 📑 Reporting
+
+│   ├── tests/                # Unit tests
+
+│   ├── main.py               # FastAPI application  "token_type": "bearer"
+
+│   └── requirements.txt
+
+├── frontend/}- **PDF Reports**: Audit-ready compliance reports## 📋 SOC 2 Trust Service Categories Coverage
+
+│   ├── src/
+
+│   │   ├── components/       # Reusable UI components```
+
+│   │   ├── pages/            # Page components
+
+│   │   ├── hooks/            # Custom React hooks- **Executive Summaries**: High-level findings for leadership
+
+│   │   ├── lib/              # Utilities and API client
+
+│   │   └── types/            # TypeScript definitions### Documents
+
+│   ├── package.json
+
+│   └── vite.config.ts- **Evidence Packages**: Compiled evidence for auditors### Security (Common Criteria) - 33 Controls
+
+├── sample_documents/         # Example files for testing
+
+├── docker-compose.yml```bash
+
+├── Makefile
+
+├── start.sh# Upload document- **Gap Reports**: Detailed gap analysis documentation| Category | Controls | Description |
+
+├── stop.sh
+
+└── README.mdPOST /api/documents/upload
 
 ```
 
-- **Executive Summaries**: High-level findings for leadership
-
-### Documents
-
-- **Evidence Packages**: Compiled evidence for auditors### Security (Common Criteria) - 33 Controls
-
-```bash
-
-# Upload document- **Gap Reports**: Detailed gap analysis documentation| Category | Controls | Description |
-
-POST /api/documents/upload
-
 Authorization: Bearer <token>|----------|----------|-------------|
+
+---
 
 Content-Type: multipart/form-data
 
+## SOC 2 Coverage
+
 ---| CC1 - Control Environment | CC1.1-CC1.5 | Integrity, board oversight, org structure, competence, accountability |
+
+ShieldAgent covers all **5 Trust Service Categories** with **51 controls**:
 
 file: <your-document.pdf>
 
-| CC2 - Communication | CC2.1-CC2.3 | Information quality, internal/external communication |
+| Category | Controls | Description |
 
-# List documents
+|----------|----------|-------------|| CC2 - Communication | CC2.1-CC2.3 | Information quality, internal/external communication |
 
-GET /api/documents## 🚀 Quick Start| CC3 - Risk Assessment | CC3.1-CC3.4 | Risk objectives, identification, fraud risk, change risk |
+| **CC** - Common Criteria | 29 | Security policies, access controls, risk management |
+
+| **A** - Availability | 3 | System uptime, disaster recovery, capacity planning |# List documents
+
+| **PI** - Processing Integrity | 5 | Data accuracy, completeness, authorization |
+
+| **C** - Confidentiality | 2 | Data classification, encryption, protection |GET /api/documents## 🚀 Quick Start| CC3 - Risk Assessment | CC3.1-CC3.4 | Risk objectives, identification, fraud risk, change risk |
+
+| **P** - Privacy | 8 | Personal data handling, consent, retention |
 
 Authorization: Bearer <token>
+
+### Scan Modes
 
 ```| CC4 - Monitoring | CC4.1-CC4.2 | Ongoing monitoring, deficiency communication |
 
+**Quick Scan (8 controls)** — Fast assessment (~30 seconds):
 
+- CC6.1: Logical Access Security
 
-### Analysis Jobs### Prerequisites| CC5 - Control Activities | CC5.1-CC5.3 | Control selection, technology controls, policy implementation |
+- CC6.2: User Registration & Authorization
 
+- CC6.3: Access Removal### Analysis Jobs### Prerequisites| CC5 - Control Activities | CC5.1-CC5.3 | Control selection, technology controls, policy implementation |
 
+- CC7.2: Security Monitoring
 
-```bash| CC6 - Logical/Physical Access | CC6.1-CC6.8 | Access security, registration, removal, restrictions, boundaries |
+- CC8.1: Change Management
+
+- A1.2: Disaster Recovery
+
+- C1.1: Confidentiality Policies```bash| CC6 - Logical/Physical Access | CC6.1-CC6.8 | Access security, registration, removal, restrictions, boundaries |
+
+- P3.1: Data Collection Practices
 
 # Start analysis
 
+**Full Scan (51 controls)** — Comprehensive analysis (~2-5 minutes)
+
 POST /api/jobs/evidence-run- **Docker & Docker Compose** (recommended)| CC7 - System Operations | CC7.1-CC7.5 | Vulnerability detection, monitoring, incident response, recovery |
 
+---
+
 Authorization: Bearer <token>
+
+## Testing
 
 {- **Python 3.11+** (for local development)| CC8 - Change Management | CC8.1 | Change management process |
 
+### Backend Tests
+
   "document_ids": ["uuid-1", "uuid-2"],
 
-  "scan_type": "quick"  # or "full"- **Node.js 18+** (for frontend development)| CC9 - Risk Mitigation | CC9.1-CC9.2 | Risk mitigation activities, vendor risk management |
+```bash
+
+cd backend  "scan_type": "quick"  # or "full"- **Node.js 18+** (for frontend development)| CC9 - Risk Mitigation | CC9.1-CC9.2 | Risk mitigation activities, vendor risk management |
+
+pytest tests/unit/ -v
 
 }
 
-- **Google Gemini API Key** ([Get one here](https://makersuite.google.com/app/apikey))
+# With coverage
+
+pytest tests/unit/ -v --cov=. --cov-report=html- **Google Gemini API Key** ([Get one here](https://makersuite.google.com/app/apikey))
+
+```
 
 # Get job status
 
+### Frontend Tests
+
 GET /api/jobs/{job_id}### Availability (A) - 3 Controls
 
-Authorization: Bearer <token>
+```bash
 
-### Option 1: Docker (Recommended) 🐳| Control | Title |
+cd frontendAuthorization: Bearer <token>
+
+npm run lint
+
+npm run build### Option 1: Docker (Recommended) 🐳| Control | Title |
+
+```
 
 # Get evidence results
 
+### CI Pipeline
+
 GET /api/jobs/{job_id}/evidence|---------|-------|
 
-Authorization: Bearer <token>
+GitHub Actions runs on every PR:
 
-```bash| A1.1 | Capacity Planning |
+- ✅ Backend unit tests (166 tests)Authorization: Bearer <token>
+
+- ✅ Frontend lint and build
+
+- ✅ Security scan (Safety + Trivy)```bash| A1.1 | Capacity Planning |
+
+- ✅ Docker build verification
 
 # Get compliance gaps
 
+---
+
 GET /api/jobs/{job_id}/gaps# Clone the repository| A1.2 | Backup and Recovery |
+
+## License
 
 Authorization: Bearer <token>
 
+MIT License - see [LICENSE](LICENSE) for details.
+
 ```git clone https://github.com/Taheriastic/shieldagent.git| A1.3 | Recovery Plan Testing |
 
+---
 
+
+
+## Contributing
 
 ### Risk & Reportscd shieldagent
 
+1. Fork the repository
 
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 
-```bash### Processing Integrity (PI) - 5 Controls
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+
+4. Push to the branch (`git push origin feature/amazing-feature`)```bash### Processing Integrity (PI) - 5 Controls
+
+5. Open a Pull Request
 
 # Get risk scores
+
+All PRs must pass CI checks before merging.
 
 GET /api/risk/{job_id}/score# Copy environment file and configure| Control | Title |
 
