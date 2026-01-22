@@ -1,0 +1,21 @@
+user_id,username,email,role,department,mfa_enabled,last_access,status,created_date,manager
+U001,john.smith,john.smith@techcorp.com,admin,IT Security,true,2024-06-14,active,2020-03-15,sarah.jones
+U002,sarah.jones,sarah.jones@techcorp.com,admin,IT Security,true,2024-06-14,active,2019-01-10,
+U003,mike.wilson,mike.wilson@techcorp.com,developer,Engineering,true,2024-06-13,active,2021-06-01,alice.chen
+U004,alice.chen,alice.chen@techcorp.com,developer,Engineering,true,2024-06-14,active,2020-08-20,
+U005,bob.taylor,bob.taylor@techcorp.com,analyst,Finance,true,2024-06-12,active,2022-02-14,carol.white
+U006,carol.white,carol.white@techcorp.com,analyst,Finance,true,2024-06-14,active,2018-11-05,
+U007,david.brown,david.brown@techcorp.com,viewer,Marketing,true,2024-06-10,active,2023-01-20,emma.davis
+U008,emma.davis,emma.davis@techcorp.com,viewer,Marketing,true,2024-06-14,active,2021-09-15,
+U009,frank.miller,frank.miller@techcorp.com,developer,Engineering,true,2024-06-14,active,2022-07-01,alice.chen
+U010,grace.lee,grace.lee@techcorp.com,analyst,Compliance,true,2024-06-14,active,2023-03-10,sarah.jones
+U011,henry.wang,henry.wang@techcorp.com,developer,Engineering,true,2024-06-11,active,2021-12-01,alice.chen
+U012,iris.kim,iris.kim@techcorp.com,viewer,HR,true,2024-06-13,active,2022-05-20,carol.white
+U013,james.garcia,james.garcia@techcorp.com,admin,IT Infrastructure,true,2024-06-14,active,2019-07-15,sarah.jones
+U014,kate.martinez,kate.martinez@techcorp.com,developer,Engineering,true,2024-06-14,active,2023-08-01,alice.chen
+U015,luis.rodriguez,luis.rodriguez@techcorp.com,analyst,Risk Management,true,2024-06-14,active,2022-11-10,sarah.jones
+U016,maria.hernandez,maria.hernandez@techcorp.com,viewer,Operations,false,2024-05-01,inactive,2020-04-15,emma.davis
+U017,nick.johnson,nick.johnson@techcorp.com,developer,Engineering,true,2024-06-14,active,2021-02-28,alice.chen
+U018,olivia.williams,olivia.williams@techcorp.com,analyst,Legal,true,2024-06-12,active,2022-09-05,carol.white
+U019,peter.anderson,peter.anderson@techcorp.com,viewer,Sales,true,2024-06-14,active,2023-04-22,emma.davis
+U020,quinn.thomas,quinn.thomas@techcorp.com,admin,IT Security,true,2024-06-14,active,2020-10-01,sarah.jones

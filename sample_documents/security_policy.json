@@ -1,0 +1,180 @@
+{
+  "organization": "TechCorp Inc.",
+  "document_type": "Security Policy",
+  "version": "2.1",
+  "effective_date": "2024-01-01",
+  "last_review_date": "2024-06-15",
+  
+  "access_control_policy": {
+    "authentication": {
+      "mfa_required": true,
+      "mfa_methods": ["authenticator_app", "hardware_token", "sms"],
+      "password_requirements": {
+        "min_length": 12,
+        "require_uppercase": true,
+        "require_lowercase": true,
+        "require_numbers": true,
+        "require_special_chars": true,
+        "max_age_days": 90,
+        "history_count": 12
+      },
+      "sso_enabled": true,
+      "sso_provider": "Okta"
+    },
+    "authorization": {
+      "model": "RBAC",
+      "roles": ["admin", "developer", "analyst", "viewer"],
+      "principle_of_least_privilege": true,
+      "access_review_frequency": "quarterly"
+    },
+    "user_provisioning": {
+      "approval_required": true,
+      "approvers": ["manager", "security_team"],
+      "onboarding_checklist": true,
+      "background_check_required": true
+    },
+    "user_deprovisioning": {
+      "termination_sla_hours": 24,
+      "automated_revocation": true,
+      "exit_checklist": true,
+      "access_review_on_transfer": true
+    }
+  },
+  
+  "incident_response": {
+    "plan_exists": true,
+    "last_updated": "2024-03-01",
+    "severity_levels": ["critical", "high", "medium", "low"],
+    "response_team": {
+      "roles": ["incident_commander", "technical_lead", "communications", "legal"],
+      "on_call_rotation": true,
+      "contact_list_updated": "2024-06-01"
+    },
+    "procedures": {
+      "detection": "SIEM alerts, user reports, automated scans",
+      "containment": "Network isolation, credential reset, system freeze",
+      "eradication": "Malware removal, patching, configuration fixes",
+      "recovery": "System restoration, data recovery, service resumption",
+      "lessons_learned": "Post-incident review within 5 business days"
+    },
+    "communication_plan": {
+      "internal_notification": true,
+      "customer_notification": true,
+      "regulatory_notification": true,
+      "notification_sla_hours": 72
+    },
+    "tabletop_exercises": {
+      "frequency": "semi-annual",
+      "last_exercise": "2024-05-15"
+    }
+  },
+  
+  "monitoring_and_logging": {
+    "siem_solution": "Splunk Enterprise",
+    "log_retention_days": 365,
+    "log_sources": [
+      "firewalls",
+      "servers",
+      "applications",
+      "databases",
+      "identity_providers",
+      "cloud_services"
+    ],
+    "alerting": {
+      "enabled": true,
+      "response_sla_minutes": 15,
+      "escalation_procedures": true
+    },
+    "24x7_monitoring": true,
+    "soc_team": "in-house"
+  },
+  
+  "change_management": {
+    "process_documented": true,
+    "change_advisory_board": true,
+    "approval_workflow": {
+      "standard_changes": ["manager_approval"],
+      "significant_changes": ["manager_approval", "security_review", "cab_approval"],
+      "emergency_changes": ["manager_approval", "post_change_review"]
+    },
+    "testing_requirements": {
+      "development_testing": true,
+      "staging_testing": true,
+      "security_testing": true,
+      "performance_testing": true
+    },
+    "rollback_procedures": true,
+    "documentation_requirements": true
+  },
+  
+  "risk_management": {
+    "risk_assessment_frequency": "annual",
+    "last_assessment_date": "2024-02-01",
+    "methodology": "NIST Risk Management Framework",
+    "risk_register_maintained": true,
+    "risk_categories": [
+      "operational",
+      "financial",
+      "compliance",
+      "reputational",
+      "strategic"
+    ],
+    "risk_treatment_options": ["accept", "mitigate", "transfer", "avoid"],
+    "risk_appetite_defined": true,
+    "board_oversight": true
+  },
+  
+  "backup_and_recovery": {
+    "backup_policy": {
+      "frequency": {
+        "full_backup": "weekly",
+        "incremental_backup": "daily"
+      },
+      "retention_period_days": 90,
+      "offsite_storage": true,
+      "encryption_enabled": true
+    },
+    "recovery_objectives": {
+      "rto_hours": 4,
+      "rpo_hours": 1
+    },
+    "testing": {
+      "frequency": "quarterly",
+      "last_test_date": "2024-04-15",
+      "test_results": "successful"
+    },
+    "disaster_recovery_plan": {
+      "exists": true,
+      "last_updated": "2024-01-15",
+      "alternate_site": "AWS us-west-2"
+    }
+  },
+  
+  "vendor_management": {
+    "vendor_assessment_required": true,
+    "assessment_criteria": [
+      "security_certifications",
+      "data_handling_practices",
+      "incident_response",
+      "business_continuity"
+    ],
+    "annual_review": true,
+    "critical_vendors_identified": true,
+    "contract_security_requirements": true
+  },
+  
+  "compliance_certifications": [
+    {
+      "certification": "SOC 2 Type II",
+      "scope": "Trust Services Criteria",
+      "valid_until": "2025-03-31",
+      "auditor": "Deloitte"
+    },
+    {
+      "certification": "ISO 27001",
+      "scope": "Information Security Management",
+      "valid_until": "2026-01-15",
+      "auditor": "BSI"
+    }
+  ]
+}
